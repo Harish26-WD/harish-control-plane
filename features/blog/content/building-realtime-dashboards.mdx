@@ -1,0 +1,111 @@
+---
+title: "Building Real-Time Dashboards with Socket.IO and React"
+description: "A practical guide to building production-grade real-time dashboards — covering WebSocket architecture, event batching, and UI patterns for live data."
+date: "2025-11-15"
+readingTime: "8 min read"
+tags: ["Real-Time", "React", "Socket.IO", "Node.js"]
+excerpt: "Real-time dashboards are deceptively complex. Here's what I learned building systems that handle 10,000+ daily live events reliably."
+---
+
+# Building Real-Time Dashboards with Socket.IO and React
+
+Real-time dashboards look simple on the surface — data flows in, the UI updates. But in production, handling thousands of simultaneous connections while keeping the UI smooth is genuinely hard. Here's what I learned building systems that process 10,000+ daily events.
+
+## The Core Architecture
+
+The fundamental pattern is straightforward:
+
+```
+IoT Device → MQTT Broker → Node.js Backend → Socket.IO → React Client
+```
+
+But each layer requires careful decisions.
+
+## Why MQTT Before Socket.IO?
+
+For IoT systems, sensors speak MQTT — it's a lightweight publish/subscribe protocol designed for constrained devices on unreliable networks. Your Node.js backend subscribes to MQTT topics and bridges events to Socket.IO for the web clients.
+
+```javascript
+// Bridge: MQTT → Socket.IO
+mqttClient.on('message', (topic, payload) => {
+  const event = parseEvent(topic, payload)
+  io.to(`facility:${event.facilityId}`).emit('sensor-update', event)
+})
+```
+
+This separation means your IoT infrastructure is decoupled from your web layer.
+
+## Event Batching for Performance
+
+The biggest mistake I made early on: emitting every single event immediately. With 10,000+ daily events across dozens of clients, this causes UI thrashing and excessive re-renders.
+
+**The fix: batch events on the server, flush every 100ms.**
+
+```javascript
+const pendingEvents = new Map()
+
+function queueEvent(facilityId, event) {
+  if (!pendingEvents.has(facilityId)) {
+    pendingEvents.set(facilityId, [])
+  }
+  pendingEvents.get(facilityId).push(event)
+}
+
+setInterval(() => {
+  for (const [facilityId, events] of pendingEvents.entries()) {
+    if (events.length > 0) {
+      io.to(`facility:${facilityId}`).emit('batch-update', events)
+      pendingEvents.set(facilityId, [])
+    }
+  }
+}, 100)
+```
+
+This reduced client-side render cycles by ~80% in our case.
+
+## React Side: Efficient State Updates
+
+On the React side, avoid replacing the entire state array on every update. Merge changes instead:
+
+```typescript
+const [deviceStatus, setDeviceStatus] = useState<Map<string, DeviceEvent>>(new Map())
+
+useEffect(() => {
+  socket.on('batch-update', (events: DeviceEvent[]) => {
+    setDeviceStatus(prev => {
+      const next = new Map(prev)
+      for (const event of events) {
+        next.set(event.deviceId, event)
+      }
+      return next
+    })
+  })
+}, [socket])
+```
+
+Using a `Map` keyed by `deviceId` means updates are O(1) lookups and React only re-renders the components whose data changed.
+
+## Handling Disconnections Gracefully
+
+Clients disconnect. Networks fail. Always implement reconnection with state reconciliation:
+
+```typescript
+socket.on('reconnect', () => {
+  // Re-fetch current state snapshot on reconnect
+  socket.emit('request-snapshot', { facilityId })
+})
+
+socket.on('state-snapshot', (snapshot) => {
+  setDeviceStatus(new Map(snapshot.map(e => [e.deviceId, e])))
+})
+```
+
+## Key Takeaways
+
+- **Bridge MQTT to Socket.IO** — don't expose MQTT directly to browser clients
+- **Batch events server-side** — never emit every event immediately
+- **Use Maps for state** — O(1) lookups, targeted re-renders
+- **Always handle reconnection** — assume the client will disconnect
+- **Room-based targeting** — use Socket.IO rooms to scope events to relevant clients
+
+The architecture above is what runs in production handling real industrial IoT data. The principles apply equally well to any live data dashboard — analytics, monitoring, or finance.
