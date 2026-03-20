@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react"
 import { projects, getProjectBySlug } from "@/features/projects/data/projects"
 import { Badge } from "@/components/ui/badge"
 import { FadeIn } from "@/components/animations/fade-in"
+import { JsonLd } from "@/components/seo/json-ld"
 import { SITE_CONFIG } from "@/lib/constants"
 
 interface Props {
@@ -19,12 +20,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const project = getProjectBySlug(slug)
   if (!project) return {}
+  const canonicalUrl = `${SITE_CONFIG.url}/projects/${slug}`
   return {
     title: project.title,
     description: project.description,
+    alternates: { canonical: canonicalUrl },
+    keywords: project.techStack,
     openGraph: {
       title: `${project.title} | ${SITE_CONFIG.name}`,
       description: project.description,
+      url: canonicalUrl,
     },
   }
 }
@@ -34,8 +39,20 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProjectBySlug(slug)
   if (!project) notFound()
 
+  const softwareAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.description,
+    applicationCategory: "BusinessApplication",
+    author: { "@type": "Person", name: SITE_CONFIG.name, url: SITE_CONFIG.url },
+    url: `${SITE_CONFIG.url}/projects/${slug}`,
+    keywords: project.techStack.join(", "),
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <JsonLd data={softwareAppSchema} />
       {/* Back */}
       <FadeIn>
         <Link

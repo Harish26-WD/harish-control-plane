@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   title: "Real-Time Systems & Dashboard Engineer",
   description:
     "Full-stack engineer specializing in real-time systems, IoT platforms, and high-performance dashboards. 5+ years building enterprise applications for banking, government, and industrial domains.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://harishkumar.dev",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://harish-control-plane.vercel.app",
   email: "sharishk26@gmail.com",
   phone: "+91 86828 75808",
   linkedin: "https://linkedin.com/in/harishkumar-s",

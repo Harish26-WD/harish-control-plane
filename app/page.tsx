@@ -9,6 +9,14 @@ import { SITE_CONFIG } from "@/lib/constants"
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.name} | ${SITE_CONFIG.title}`,
   description: SITE_CONFIG.description,
+  alternates: { canonical: SITE_CONFIG.url },
+  keywords: [
+    "Harish Kumar S portfolio",
+    "Full-Stack Engineer Chennai",
+    "Real-Time Systems developer",
+    "IoT dashboard engineer India",
+    "hire Next.js developer",
+  ],
 }
 
 export default function HomePage() {

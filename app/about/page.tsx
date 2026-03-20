@@ -12,6 +12,8 @@ import { StatusIndicator } from "@/components/ui/status-indicator"
 export const metadata: Metadata = {
   title: "About",
   description: "Learn about Harish Kumar S — a full-stack engineer specializing in real-time systems, IoT platforms, and high-performance dashboards.",
+  alternates: { canonical: `${SITE_CONFIG.url}/about` },
+  keywords: ["Harish Kumar S", "about", "full-stack engineer", "5 years experience", "Chennai engineer", "Muthu Soft Labs"],
 }
 
 export default function AboutPage() {

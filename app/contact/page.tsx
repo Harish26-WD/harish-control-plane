@@ -9,6 +9,8 @@ import { SITE_CONFIG } from "@/lib/constants"
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Harish Kumar S for hiring, freelance, or collaboration inquiries.",
+  alternates: { canonical: `${SITE_CONFIG.url}/contact` },
+  keywords: ["hire full-stack engineer", "contact Harish Kumar", "freelance developer India", "software engineer for hire"],
 }
 
 export default function ContactPage() {

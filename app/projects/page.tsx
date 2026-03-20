@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { SITE_CONFIG } from "@/lib/constants"
 import { projects } from "@/features/projects/data/projects"
 import { ProjectCard } from "@/features/projects/components/project-card"
 import { FadeIn } from "@/components/animations/fade-in"
@@ -7,6 +8,8 @@ import { Layers, Sparkles } from "lucide-react"
 export const metadata: Metadata = {
   title: "Projects",
   description: "Case studies of enterprise systems I've built — real-time IoT platforms, analytics dashboards, and cloud-native applications.",
+  alternates: { canonical: `${SITE_CONFIG.url}/projects` },
+  keywords: ["IoT projects", "real-time dashboard", "SaaS platform", "enterprise software", "Next.js projects"],
 }
 
 export default function ProjectsPage() {
