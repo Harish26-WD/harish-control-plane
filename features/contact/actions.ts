@@ -65,7 +65,7 @@ export async function sendContactEmail(
           <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
           <h3 style="color: #475569; font-size: 14px; margin-bottom: 8px;">Message:</h3>
           <p style="color: #0f172a; line-height: 1.7; background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;">${message.replace(/\n/g, "<br/>")}</p>
-          <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">Sent from harishkumar.dev portfolio</p>
+          <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">Sent from ${SITE_CONFIG.url} portfolio</p>
         </div>
       `,
     })
