@@ -232,7 +232,7 @@ export function HeroSection() {
                 View Projects
                 <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <a href="/resume.pdf" download className="btn-ghost">
+              <a href="/harish-kumar-resume.pdf" download className="btn-ghost">
                 <Download size={15} />
                 Resume
               </a>
