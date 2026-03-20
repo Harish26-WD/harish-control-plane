@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useEffect, useRef } from "react"
+import { useActionState, useEffect, useRef, useState } from "react"
 import { sendContactEmail, type ContactActionState } from "@/features/contact/actions"
 import { CheckCircle2, AlertCircle, Loader2, Send, Sparkles } from "lucide-react"
 
@@ -9,9 +9,13 @@ const initialState: ContactActionState = { success: false, message: "" }
 export function ContactForm() {
   const [state, action, isPending] = useActionState(sendContactEmail, initialState)
   const formRef = useRef<HTMLFormElement>(null)
+  const [messageLength, setMessageLength] = useState(0)
 
   useEffect(() => {
-    if (state.success) formRef.current?.reset()
+    if (state.success) {
+      formRef.current?.reset()
+      setMessageLength(0)
+    }
   }, [state.success])
 
   const inputClasses =
@@ -90,16 +94,24 @@ export function ContactForm() {
 
       {/* Message */}
       <div>
-        <label htmlFor="message" className="block text-xs font-semibold text-[var(--text-secondary)] mb-2 uppercase tracking-wider">
-          Message <span className="text-[var(--pink)]">*</span>
-        </label>
+        <div className="flex items-center justify-between mb-2">
+          <label htmlFor="message" className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
+            Message <span className="text-[var(--pink)]">*</span>
+          </label>
+          <span className={`text-xs tabular-nums ${messageLength < 20 ? "text-[var(--pink)]" : "text-[var(--text-muted)]"}`}>
+            {messageLength}/2000
+            {messageLength < 20 && <span className="ml-1">({20 - messageLength} more)</span>}
+          </span>
+        </div>
         <textarea
           id="message"
           name="message"
           rows={5}
           required
+          maxLength={2000}
           placeholder="Tell me about your project or inquiry..."
           className={`${inputClasses} resize-none`}
+          onChange={(e) => setMessageLength(e.target.value.length)}
         />
         {state.errors?.message && (
           <p className="text-[var(--pink)] text-xs mt-1.5 flex items-center gap-1">
