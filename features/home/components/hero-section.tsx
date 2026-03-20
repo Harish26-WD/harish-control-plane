@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
 import { ArrowRight, Download, Sparkles, Zap, Globe, Server } from "lucide-react"
@@ -153,7 +154,7 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden mb-5"
     >
       {/* Particle canvas — section-level only */}
       <ParticleField />
@@ -198,96 +199,186 @@ export function HeroSection() {
               style={{ background: "linear-gradient(90deg, transparent, var(--primary) 40%, var(--accent) 70%, transparent)" }}
             />
 
-            <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="tag-glow">
-                <StatusIndicator status="active" />
-                {SITE_CONFIG.availabilityText}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-(--text-muted) font-mono">
-                <Sparkles size={10} className="text-(--gold)" />
-                5+ yrs · Chennai, IN
-              </span>
-            </div>
+            {/* Two-column layout: content left, photo right */}
+            <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-12">
 
-            <h1 className="text-[clamp(2rem,4.8vw,3.8rem)] font-black leading-[1.06] tracking-tight mb-3">
-              <span className="text-(--text-primary)">I build systems</span>
-              <br />
-              <span className="text-(--text-primary)">that </span>
-              <span className="gradient-text-aurora">handle scale</span>
-            </h1>
-
-            {/* Typing sub-role */}
-            <div className="text-[clamp(0.95rem,2.2vw,1.25rem)] font-semibold mb-5 h-9 flex items-center">
-              <TypedRole />
-            </div>
-
-            <p className="text-base sm:text-lg text-(--text-secondary) leading-relaxed max-w-3xl mb-8">
-              Specializing in real-time IoT platforms, enterprise dashboards, and
-              high-throughput data systems. 5+ years delivering production systems
-              with 99.9% uptime for banking and government clients.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mb-10">
-              <Link href="/projects" className="btn-primary group">
-                View Projects
-                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a href="/harish-kumar-resume.pdf" download className="btn-ghost">
-                <Download size={15} />
-                Resume
-              </a>
-            </div>
-
-            {/* ── Metrics row (inline) ── */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pt-8 border-t border-[var(--border)]/40">
-              {/* Metric 1 */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--primary) 15%, transparent)" }}>
-                    <Server size={14} className="text-(--primary)" />
-                  </div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Throughput</span>
+              {/* ── Left: text content ── */}
+              <div className="flex-1 min-w-0">
+                <div className="mb-6 flex flex-wrap items-center gap-3">
+                  <span className="tag-glow">
+                    <StatusIndicator status="active" />
+                    {SITE_CONFIG.availabilityText}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-(--text-muted) font-mono">
+                    <Sparkles size={10} className="text-(--gold)" />
+                    5+ yrs · Chennai, IN
+                  </span>
                 </div>
-                <span className="text-3xl sm:text-4xl font-black font-mono gradient-text block">10K+</span>
-                <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">daily IoT events</p>
+
+                <h1 className="text-[clamp(2rem,4.8vw,3.8rem)] font-black leading-[1.06] tracking-tight mb-3">
+                  <span className="text-(--text-primary)">I build systems</span>
+                  <br />
+                  <span className="text-(--text-primary)">that </span>
+                  <span className="gradient-text-aurora">handle scale</span>
+                </h1>
+
+                {/* Typing sub-role */}
+                <div className="text-[clamp(0.95rem,2.2vw,1.25rem)] font-semibold mb-5 h-9 flex items-center">
+                  <TypedRole />
+                </div>
+
+                <p className="text-base sm:text-lg text-(--text-secondary) leading-relaxed max-w-2xl mb-8">
+                  Specializing in real-time IoT platforms, enterprise dashboards, and
+                  high-throughput data systems. 5+ years delivering production systems
+                  with 99.9% uptime for banking and government clients.
+                </p>
+
+                <div className="flex flex-wrap gap-3 mb-10">
+                  <Link href="/projects" className="btn-primary group">
+                    View Projects
+                    <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <a href="/harish-kumar-resume.pdf" download className="btn-ghost">
+                    <Download size={15} />
+                    Resume
+                  </a>
+                </div>
+
+                {/* ── Metrics row (inline) ── */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pt-8 border-t border-[var(--border)]/40">
+                  {/* Metric 1 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--primary) 15%, transparent)" }}>
+                        <Server size={14} className="text-(--primary)" />
+                      </div>
+                      <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Throughput</span>
+                    </div>
+                    <span className="text-3xl sm:text-4xl font-black font-mono gradient-text block">10K+</span>
+                    <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">daily IoT events</p>
+                  </motion.div>
+
+                  {/* Metric 2 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--accent) 15%, transparent)" }}>
+                        <Zap size={14} className="text-(--accent)" />
+                      </div>
+                      <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Performance</span>
+                    </div>
+                    <span className="text-3xl sm:text-4xl font-black font-mono text-(--accent) block">99.9%</span>
+                    <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">uptime on AWS</p>
+                  </motion.div>
+
+                  {/* Metric 3 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.29, ease: [0.16, 1, 0.3, 1] }}
+                    className="col-span-2 md:col-span-1"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--secondary) 15%, transparent)" }}>
+                        <Globe size={14} className="text-(--secondary)" />
+                      </div>
+                      <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Experience</span>
+                    </div>
+                    <span className="text-3xl sm:text-4xl font-black font-mono text-(--secondary) block">5+</span>
+                    <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">yrs in production</p>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* ── Right: Profile photo ── */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.88, x: 32 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                className="hidden lg:flex flex-col items-center justify-center flex-shrink-0"
+              >
+                {/* Outer decorative ring */}
+                <div className="relative w-[300px] h-[300px]">
+                  {/* Rotating gradient ring */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: "conic-gradient(from 0deg, var(--primary), var(--accent), var(--secondary), var(--primary))",
+                      padding: "3px",
+                    }}
+                  >
+                    <div
+                      className="w-full h-full rounded-full"
+                      style={{ background: "var(--surface)" }}
+                    />
+                  </motion.div>
+
+                  {/* Glow aura */}
+                  <div
+                    className="absolute inset-[-12px] rounded-full pointer-events-none"
+                    style={{
+                      background: "radial-gradient(circle, color-mix(in srgb, var(--primary) 20%, transparent) 0%, transparent 70%)",
+                      filter: "blur(16px)",
+                    }}
+                  />
+
+                  {/* Photo container */}
+                  <motion.div
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute inset-[6px] rounded-full overflow-hidden"
+                    style={{
+                      boxShadow: "0 24px 64px -12px color-mix(in srgb, var(--primary) 40%, transparent)",
+                    }}
+                  >
+                    <Image
+                      src="/images/profile-pic.png"
+                      alt="Harish Kumar S"
+                      width={288}
+                      height={288}
+                      className="w-full h-full object-cover object-top"
+                      priority
+                    />
+                    {/* Subtle inner overlay for depth */}
+                    <div
+                      className="absolute inset-0 rounded-full pointer-events-none"
+                      style={{
+                        background: "linear-gradient(160deg, color-mix(in srgb, var(--primary) 8%, transparent) 0%, transparent 50%)",
+                      }}
+                    />
+                  </motion.div>
+
+                  {/* Floating badge — "Available" */}
+                  {/*<motion.div
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.7, duration: 0.4 }}
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 tag-glow flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs font-semibold"
+                    style={{
+                      boxShadow: "0 4px 20px -4px color-mix(in srgb, var(--primary) 35%, transparent)",
+                    }}
+                  >
+                    <StatusIndicator status="active" />
+                    Open to work
+                  </motion.div>*/}
+                </div>
+
+                {/* Name label below */}
+                <div className="mt-8 text-center">
+                  <p className="text-sm font-semibold text-(--text-primary) tracking-wide">Harish Kumar S</p>
+                  <p className="text-xs text-(--text-muted) font-mono mt-0.5">Full-Stack Engineer</p>
+                </div>
               </motion.div>
 
-              {/* Metric 2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--accent) 15%, transparent)" }}>
-                    <Zap size={14} className="text-(--accent)" />
-                  </div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Performance</span>
-                </div>
-                <span className="text-3xl sm:text-4xl font-black font-mono text-(--accent) block">99.9%</span>
-                <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">uptime on AWS</p>
-              </motion.div>
-
-              {/* Metric 3 */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.29, ease: [0.16, 1, 0.3, 1] }}
-                className="col-span-2 md:col-span-1"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "color-mix(in srgb, var(--secondary) 15%, transparent)" }}>
-                    <Globe size={14} className="text-(--secondary)" />
-                  </div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-(--text-muted)">Experience</span>
-                </div>
-                <span className="text-3xl sm:text-4xl font-black font-mono text-(--secondary) block">5+</span>
-                <p className="text-xs sm:text-sm text-(--text-secondary) mt-1">yrs in production</p>
-              </motion.div>
             </div>
           </motion.div>
 
@@ -376,7 +467,7 @@ export function HeroSection() {
 
       {/* Scroll indicator — desktop only so it doesn't overlap stacked mobile grid */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 z-20"
+        className="absolute bottom-1 left-1/2 -translate-x-1/2 -translate-y-2 hidden lg:flex flex-col items-center gap-2 z-20 -mb-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.6 }}
