@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { SITE_CONFIG } from "@/lib/constants"
 import { getAllBlogPosts } from "@/lib/mdx"
 import { BlogCard } from "@/features/blog/components/blog-card"
 import { FadeIn } from "@/components/animations/fade-in"
@@ -7,6 +8,8 @@ import { BookOpen, PenTool } from "lucide-react"
 export const metadata: Metadata = {
   title: "Blog",
   description: "Technical articles on real-time systems, SQL optimization, IoT architecture, and full-stack development.",
+  alternates: { canonical: `${SITE_CONFIG.url}/blog` },
+  keywords: ["real-time systems blog", "IoT architecture", "SQL optimization", "full-stack development articles"],
 }
 
 export default function BlogPage() {
