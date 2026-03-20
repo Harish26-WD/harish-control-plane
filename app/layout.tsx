@@ -72,6 +72,9 @@ export const metadata: Metadata = {
     images: ["/images/og-image.png"],
     creator: "@harishkumar_s",
   },
+  verification: {
+    google: "3uSWLD51bepSFJTVU9PGa2ko2dIC9CxiDbg-02zqyes",
+  },
   robots: {
     index: true,
     follow: true,
