@@ -70,7 +70,7 @@ export function Navbar() {
             </div>
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-bold text-sm text-(--text-primary) group-hover:text-(--primary) transition-colors">
-                Harish Kumar
+                Harish Kumar S
               </span>
               <span className="text-[10px] text-(--text-muted) font-mono">Full-Stack Engineer</span>
             </div>

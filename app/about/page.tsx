@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Download, MapPin, Mail, Sparkles, ArrowRight } from "lucide-react"
+import { Download, MapPin, Mail, Sparkles, ArrowRight, Smartphone, Linkedin, Github } from "lucide-react"
 import { ExperienceTimeline } from "@/features/about/components/experience-timeline"
 import { SkillsVisualization } from "@/features/about/components/skills-visualization"
 import { Certifications } from "@/features/about/components/certifications"
@@ -61,15 +61,16 @@ export default function AboutPage() {
                     />
                   </div>
                   {/* Online dot */}
-                  <span
+                  {/*<span
                     className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--status-green)] border-2 border-[var(--bg-surface)]"
                     title="Available"
-                  />
+                  />*/}
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-[var(--text-primary)]">Harish Kumar S</h2>
                   <p className="text-sm text-[var(--primary)] font-mono font-semibold">Full-Stack Engineer</p>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">@ Muthu Soft Labs · 5+ yrs</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-0.5">5+ years of experience</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-0.5">@ Muthu Soft Labs</p>
                 </div>
               </div>
 
@@ -97,16 +98,44 @@ export default function AboutPage() {
                   Chennai, Tamil Nadu, India
                 </div>
                 <div className="flex items-center gap-2.5 text-[var(--text-secondary)]">
-                  <div className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0">
-                    <Mail size={13} className="text-[var(--accent)]" />
+                  <div className="w-7 h-7 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0">
+                    <Mail size={13} className="text-[var(--primary)]" />
                   </div>
                   <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-[var(--primary)] transition-colors truncate">
                     {SITE_CONFIG.email}
                   </a>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <StatusIndicator status="active" label={SITE_CONFIG.availabilityText} />
+                {/* Mobile */}
+                <div className="flex items-center gap-2.5 text-[var(--text-secondary)]">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0">
+                    <Smartphone size={13} className="text-[var(--primary)]" />
+                  </div>
+                  <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-[var(--primary)] transition-colors truncate">
+                    {SITE_CONFIG.phone}
+                  </a>
                 </div>
+                {/* LinkkedIn */}
+                <div className="flex items-center gap-2.5 text-[var(--text-secondary)]">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0">
+                    <Linkedin size={13} className="text-[var(--primary)]" />
+                  </div>
+                  <a href={`${SITE_CONFIG.linkedin}`} className="hover:text-[var(--primary)] transition-colors truncate">
+                    {SITE_CONFIG.linkedin.split("//").pop()}
+                  </a>
+                </div>
+                {/* GitHub */}
+                <div className="flex items-center gap-2.5 text-[var(--text-secondary)]">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0">
+                    <Github size={13} className="text-[var(--primary)]" />
+                  </div>
+                  <a href={`${SITE_CONFIG.github}`} className="hover:text-[var(--primary)] transition-colors truncate">
+                    {SITE_CONFIG.github.split("//").pop()}
+                  </a>
+                </div>
+                {/* Availability */}
+                {/*<div className="flex items-center gap-2.5 justify-center">
+                  <StatusIndicator status="active" label={SITE_CONFIG.availabilityText} />
+                </div>*/}
               </div>
               <a
                 href="/resume.pdf"
